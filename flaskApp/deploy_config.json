@@ -1,0 +1,7 @@
+{
+  "resourceGroupName": "flask-app-rg",
+  "location": "eastus",
+  "acrName": "flaskappacr",
+  "aksClusterName": "flask-app-aks",
+  "keyVaultName": "flask-app-kv"
+}

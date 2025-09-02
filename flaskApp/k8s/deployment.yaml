@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: flask-app
+  labels:
+    app: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: flask-app-sa
+      containers:
+      - name: flask-app
+        image: flaskappacr08251836.azurecr.io/flask-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: AZURE_KEY_VAULT_URL
+          value: "https://flaskkv08251836.vault.azure.net/"
+        - name: SECRET_NAME
+          value: "success-code"
+        - name: PORT
+          value: "8080"
+        - name: AZURE_CLIENT_ID
+          value: "816813e8-a16b-41be-8704-0cd2afb60af7"
+        - name: AZURE_TENANT_ID
+          value: "fca47690-ab7d-413c-90e4-aafd92aac945"
+        # Temporarily removing resource limits to test scheduling
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always
+
+
