@@ -1,6 +1,6 @@
 # Part 2 – Enabling BGP Peering with Azure Virtual WAN
 
-This continues from [Part 1](../README.md) where we built the IPsec tunnel from **Chicago Branch Router (Linux VM)** to **Azure VWAN Central Hub**. In Part 2, we enable **dynamic routing with BGP** so that branch prefixes can be advertised and learned automatically.
+This continues from [Part 1](../README.md) where we built the IPsec tunnel from **Chicago Branch Router (Linux VM)** to **Azure VWAN Central Hub**. In Part 2, we enable **dynamic routing with BGP** so that branch prefixes can be advertised and learned automatically.  NOTE This was working temporarily, but needs to be revisited.
 
 ---
 
