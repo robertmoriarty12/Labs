@@ -1,1 +1,1 @@
-webhook_url = "https://webhook.site/bob"
+webhook_url = "https://webhook.site/#!/anything" # demo placeholder

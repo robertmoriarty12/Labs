@@ -31,7 +31,21 @@ resource "azurerm_eventgrid_event_subscription" "kv_expiry_sub" {
     "Microsoft.KeyVault.CertificateExpired"
   ]
 
-  webhook_endpoint {
-    url = var.webhook_url
-  }
+  eventhub_endpoint_id = azurerm_eventhub.kv_events.id
+}
+
+resource "azurerm_eventhub_namespace" "demo" {
+  name                = "evhns${random_integer.suffix.result}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "Standard"
+  capacity            = 1
+  auto_inflate_enabled = false
+}
+
+resource "azurerm_eventhub" "kv_events" {
+  name              = "kvevents"
+  namespace_id      = azurerm_eventhub_namespace.demo.id
+  partition_count   = 2
+  message_retention = 1
 }
